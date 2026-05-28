@@ -3,653 +3,651 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guitar Student Placement — Nicolas Leon</title>
+<title>Guitar Lessons with León — Online, 1-on-1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --black: #0e0e0e;
-    --white: #f5f2ec;
-    --cream: #ede9e0;
-    --muted: #7a7570;
-    --border: rgba(14,14,14,0.12);
+    --black: #0c0b09;
+    --white: #f7f4ee;
+    --cream: #ede9df;
+    --warm: #c8b89a;
     --accent: #c4622d;
-    --accent-light: #f5ddd0;
-    --serif: 'DM Serif Display', Georgia, serif;
+    --accent-light: #f2ddd0;
+    --muted: #8a8278;
+    --serif: 'Playfair Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
-    --mono: 'DM Mono', monospace;
   }
 
-  html { font-size: 16px; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: var(--sans);
-    background: var(--white);
-    color: var(--black);
-    min-height: 100vh;
+    background: var(--black);
+    color: var(--white);
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
-  /* ── HEADER ── */
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo { font-family: var(--serif); font-size: 1.15rem; letter-spacing: -0.01em; }
-  .logo span { color: var(--accent); font-style: italic; }
-  .badge { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; }
-
-  /* ── MAIN LAYOUT ── */
-  main {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 3rem 2rem 5rem;
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
   }
 
-  /* ── PROGRESS ── */
-  .progress-wrap { margin-bottom: 2.5rem; }
-  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 500; letter-spacing: 0.04em; }
-  .progress-track { height: 2px; background: var(--border); border-radius: 2px; }
-  .progress-fill { height: 2px; background: var(--black); border-radius: 2px; transition: width 0.4s ease; }
-
-  /* ── STEP ── */
-  .step { display: none; animation: fadeUp 0.3s ease; }
-  .step.active { display: block; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .step-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
-  .step-q { font-family: var(--serif); font-size: 2rem; line-height: 1.2; margin-bottom: 0.5rem; }
-  .step-hint { font-size: 14px; color: var(--muted); margin-bottom: 1.75rem; }
-
-  /* ── OPTION CARDS ── */
-  .opts { display: grid; gap: 10px; }
-  .opts.two { grid-template-columns: 1fr 1fr; }
-  .opts.one { grid-template-columns: 1fr; }
-
-  .opt {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    transition: border-color 0.15s, background 0.15s;
-    font-family: var(--sans);
-    font-size: 14px;
-    color: var(--black);
-    width: 100%;
-  }
-  .opt:hover { border-color: rgba(14,14,14,0.3); background: var(--cream); }
-  .opt.sel { border-color: var(--black); background: var(--cream); }
-  .opt.sel .odot { background: var(--black); border-color: var(--black); }
-
-  .odot {
-    width: 16px; height: 16px; min-width: 16px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(14,14,14,0.25);
-    margin-top: 2px;
-    transition: all 0.15s;
-  }
-  .otxt { flex: 1; }
-  .otitle { font-weight: 500; line-height: 1.4; }
-  .odesc { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  /* TAB block */
-  .tab-block {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin-bottom: 1.25rem;
-  }
-  .tab-label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
-  .tab-code { font-family: var(--mono); font-size: 13px; line-height: 2; color: var(--black); white-space: pre; }
-
-  /* ── NAV ── */
-  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
-  .btn-back { background: none; border: none; font-family: var(--sans); font-size: 14px; color: var(--muted); cursor: pointer; padding: 8px 0; font-weight: 500; }
-  .btn-back:hover { color: var(--black); }
-  .btn-next {
-    background: var(--black); color: var(--white);
-    border: none; font-family: var(--sans); font-size: 14px; font-weight: 500;
-    padding: 11px 24px; border-radius: 8px; cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .btn-next:disabled { opacity: 0.25; cursor: default; }
-  .btn-next:not(:disabled):hover { opacity: 0.75; }
-
-  /* ── RESULT ── */
-  .result-hero {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 2rem;
-    margin-bottom: 1.25rem;
+  /* ── HERO ── */
+  .hero {
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem 2.5rem 4rem;
     overflow: hidden;
   }
-  .result-hero::before {
-    content: '';
+
+  .hero-bg {
     position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: var(--accent-light);
-    border-radius: 50%;
-    opacity: 0.5;
-    pointer-events: none;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(196,98,45,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,184,154,0.1) 0%, transparent 60%),
+      var(--black);
+    z-index: 0;
   }
-  .result-lv { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
-  .result-title { font-family: var(--serif); font-size: 1.75rem; line-height: 1.2; margin-bottom: 0.75rem; }
-  .result-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-  .tag { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
 
-  /* AI Brief */
-  .brief-card {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.75rem 2rem;
-    margin-bottom: 1.25rem;
+  .hero-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--warm), transparent);
+    opacity: 0.3;
   }
-  .brief-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-  .brief-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  .brief-section { margin-bottom: 1.25rem; }
-  .brief-section:last-child { margin-bottom: 0; }
-  .brief-section h4 { font-size: 13px; font-weight: 500; letter-spacing: 0.04em; color: var(--black); margin-bottom: 6px; }
-  .brief-section p, .brief-section li { font-size: 14px; color: var(--muted); line-height: 1.65; }
-  .brief-section ul { padding-left: 1.1rem; }
-  .brief-section li { margin-bottom: 3px; }
-
-  .song-chip {
-    display: inline-flex;
+  .nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 6px;
+    z-index: 2;
   }
-  .song-chip .note { font-size: 16px; }
 
-  /* loading */
-  .loading {
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .nav-logo em { color: var(--accent); }
+
+  .nav-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
-    color: var(--muted);
-    padding: 1.5rem 0;
   }
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid var(--border);
-    border-top-color: var(--black);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    flex-shrink: 0;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* profile row */
-  .profile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
-  .profile-cell {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 12px 14px;
-  }
-  .pcell-label { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
-  .pcell-val { font-size: 13px; font-weight: 500; color: var(--black); line-height: 1.35; }
-
-  /* booking CTA */
-  .booking-card {
-    border: 1.5px solid var(--accent);
-    border-radius: 14px;
-    padding: 1.75rem 2rem;
-    margin-bottom: 1.25rem;
-    background: var(--accent-light);
-    text-align: center;
-  }
-  .booking-card h3 {
-    font-family: var(--serif);
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: var(--black);
-  }
-  .booking-card p {
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 1.25rem;
-    line-height: 1.6;
-  }
-  .btn-book {
+  .hero-eyebrow::before {
+    content: '';
     display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--warm);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     background: var(--accent);
     color: #fff;
     font-family: var(--sans);
     font-size: 15px;
     font-weight: 500;
-    padding: 13px 32px;
-    border-radius: 8px;
+    padding: 15px 32px;
+    border-radius: 4px;
     text-decoration: none;
-    transition: opacity 0.15s;
+    letter-spacing: 0.01em;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
   }
-  .btn-book:hover { opacity: 0.85; }
 
-  /* reset btn */
-  .btn-reset {
-    width: 100%;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 500;
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(196,98,45,0.35); }
+
+  .btn-arrow { font-size: 18px; transition: transform 0.2s; }
+  .btn-primary:hover .btn-arrow { transform: translateX(4px); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 4rem;
+    right: 2.5rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: right;
+  }
+
+  .stat-val {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--muted);
-    padding: 12px;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: border-color 0.15s, color 0.15s;
+    margin-top: 4px;
   }
-  .btn-reset:hover { border-color: var(--black); color: var(--black); }
 
-  @media (max-width: 520px) {
-    .opts.two { grid-template-columns: 1fr; }
-    .profile-grid { grid-template-columns: 1fr 1fr; }
-    .step-q { font-size: 1.6rem; }
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,184,154,0.2), transparent);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--black);
+    padding: 6rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .about-title {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-title em { font-style: italic; color: var(--warm); }
+
+  .about-body {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .about-body p + p { margin-top: 1rem; }
+  .about-body strong { color: var(--white); font-weight: 500; }
+
+  .about-right { display: flex; flex-direction: column; gap: 1rem; }
+
+  .feature-pill {
+    border: 1px solid rgba(200,184,154,0.15);
+    border-radius: 8px;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .feature-pill:hover {
+    border-color: rgba(196,98,45,0.3);
+    background: rgba(196,98,45,0.04);
+  }
+
+  .fp-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .fp-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .fp-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── REVIEWS ── */
+  .reviews-section {
+    background: #0f0e0b;
+    padding: 6rem 2.5rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--white);
+  }
+
+  .section-title em { font-style: italic; color: var(--warm); }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .review-card {
+    border: 1px solid rgba(200,184,154,0.1);
+    border-radius: 12px;
+    padding: 1.75rem;
+    background: rgba(255,255,255,0.02);
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .review-card:hover {
+    border-color: rgba(196,98,45,0.25);
+    transform: translateY(-2px);
+  }
+
+  .review-card::before {
+    content: '"';
+    font-family: var(--serif);
+    font-size: 5rem;
+    color: var(--accent);
+    opacity: 0.15;
+    position: absolute;
+    top: 0.5rem;
+    left: 1.25rem;
+    line-height: 1;
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .star { color: #f4b942; font-size: 13px; }
+
+  .review-text {
+    font-size: 14px;
+    color: rgba(247,244,238,0.75);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .reviewer-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .reviewer-name { font-size: 13px; font-weight: 500; color: var(--white); }
+  .reviewer-sub { font-size: 12px; color: var(--muted); }
+
+  /* ── BOOKING ── */
+  .booking-section {
+    padding: 7rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .booking-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(196,98,45,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .booking-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .booking-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+
+  .booking-title em { font-style: italic; color: var(--warm); }
+
+  .booking-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 460px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .booking-note {
+    margin-top: 1.25rem;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .booking-note a { color: var(--warm); text-decoration: none; }
+  .booking-note a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(200,184,154,0.1);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo { font-family: var(--serif); font-size: 1rem; color: var(--muted); }
+  .footer-logo em { color: var(--accent); }
+  .footer-copy { font-size: 12px; color: rgba(138,130,120,0.6); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .about { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .hero { padding: 5rem 1.5rem 3.5rem; }
+    .nav { padding: 1.25rem 1.5rem; }
+    .reviews-section, .booking-section { padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Nicolas <span>Leon</span> — Guitar</div>
-  <div class="badge">Student Placement</div>
-</header>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
 
-<main>
-  <div class="progress-wrap">
-    <div class="progress-meta">
-      <span id="prog-label">Step 1 of 8</span>
-      <span id="prog-pct">0%</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  <nav class="nav">
+    <div class="nav-logo">León <em>Guitar</em></div>
+    <div class="nav-tag">Online · 1-on-1</div>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">Guitar lessons for adults</div>
+    <h1 class="hero-title fade-up delay-1">
+      Learn the songs<br>you <em>actually</em> love.
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      Online guitar lessons with <strong>Nicolás León</strong> — structured, personal, and built around your goals. No boring exercises. Just real music, real progress.
+    </p>
+    <a href="https://calendar.app.google/8o8ckbia8TZ4Js6N8" target="_blank" class="btn-primary fade-up delay-3">
+      Book your trial lesson <span class="btn-arrow">→</span>
+    </a>
   </div>
 
-  <!-- STEP 0 -->
-  <div class="step active" id="step-0">
-    <div class="step-eyebrow">Getting started</div>
-    <div class="step-q">What brings you to guitar?</div>
-    <div class="step-hint">No wrong answer — this shapes everything we do together.</div>
-    <div class="opts one">
-      <button class="opt" data-q="0" data-v="fun"><span class="odot"></span><span class="otxt"><span class="otitle">Play songs I love, just for fun</span></span></button>
-      <button class="opt" data-q="0" data-v="perform"><span class="odot"></span><span class="otxt"><span class="otitle">Perform live or join a band</span></span></button>
-      <button class="opt" data-q="0" data-v="write"><span class="odot"></span><span class="otxt"><span class="otitle">Write my own songs or compositions</span></span></button>
-      <button class="opt" data-q="0" data-v="improve"><span class="odot"></span><span class="otxt"><span class="otitle">I already play — I just want to get better</span></span></button>
+  <div class="hero-stats fade-up delay-4">
+    <div>
+      <div class="stat-val">4.8★</div>
+      <div class="stat-label">Average rating</div>
     </div>
-    <div class="nav"><span></span><button class="btn-next" id="next-0" disabled>Continue →</button></div>
+    <div>
+      <div class="stat-val">11+</div>
+      <div class="stat-label">Students taught</div>
+    </div>
+    <div>
+      <div class="stat-val">12</div>
+      <div class="stat-label">Level curriculum</div>
+    </div>
   </div>
+</section>
 
-  <!-- STEP 1 -->
-  <div class="step" id="step-1">
-    <div class="step-eyebrow">Experience</div>
-    <div class="step-q">How long have you been playing?</div>
-    <div class="step-hint">Count any time in the past, even if you stopped for a while.</div>
-    <div class="opts two">
-      <button class="opt" data-q="1" data-v="0"><span class="odot"></span><span class="otxt"><span class="otitle">Never picked one up</span></span></button>
-      <button class="opt" data-q="1" data-v="1"><span class="odot"></span><span class="otxt"><span class="otitle">A few months</span></span></button>
-      <button class="opt" data-q="1" data-v="2"><span class="odot"></span><span class="otxt"><span class="otitle">1–2 years</span></span></button>
-      <button class="opt" data-q="1" data-v="3"><span class="odot"></span><span class="otxt"><span class="otitle">3–5 years</span></span></button>
-      <button class="opt" data-q="1" data-v="4"><span class="odot"></span><span class="otxt"><span class="otitle">More than 5 years</span></span></button>
-      <button class="opt" data-q="1" data-v="5"><span class="odot"></span><span class="otxt"><span class="otitle">Took lessons before, then stopped</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-1">← Back</button><button class="btn-next" id="next-1" disabled>Continue →</button></div>
-  </div>
+<div class="divider"></div>
 
-  <!-- STEP 2 -->
-  <div class="step" id="step-2">
-    <div class="step-eyebrow">Chord knowledge</div>
-    <div class="step-q">What can you play right now?</div>
-    <div class="step-hint">Pick the highest option that feels comfortable — not just something you've tried once.</div>
-    <div class="opts one">
-      <button class="opt" data-q="2" data-v="0"><span class="odot"></span><span class="otxt"><span class="otitle">Nothing yet</span><span class="odesc">Starting from scratch</span></span></button>
-      <button class="opt" data-q="2" data-v="1"><span class="odot"></span><span class="otxt"><span class="otitle">A few open chords</span><span class="odesc">G, C, D, Em — still slow to switch</span></span></button>
-      <button class="opt" data-q="2" data-v="2"><span class="odot"></span><span class="otxt"><span class="otitle">Open chords + power chords, in time</span><span class="odesc">I can hold a steady rhythm</span></span></button>
-      <button class="opt" data-q="2" data-v="3"><span class="odot"></span><span class="otxt"><span class="otitle">Barre chords (F major, B minor…)</span><span class="odesc">Clean enough to use in real songs</span></span></button>
-      <button class="opt" data-q="2" data-v="4"><span class="odot"></span><span class="otxt"><span class="otitle">7th, extended, and jazz voicings</span><span class="odesc">I understand how they're built</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-2">← Back</button><button class="btn-next" id="next-2" disabled>Continue →</button></div>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="step" id="step-3">
-    <div class="step-eyebrow">Reading music</div>
-    <div class="step-q">What do you see here?</div>
-    <div class="step-hint">This is guitar tablature — the notation we use in every lesson.</div>
-    <div class="tab-block">
-      <div class="tab-label">Read this TAB and pick the best description</div>
-      <div class="tab-code">e|–––0–––2–––3–––|
-B|–––1–––3–––1–––|
-G|–––0–––2–––0–––|
-D|–––2–––0–––2–––|
-A|–––3–––––––3–––|
-E|–––––––––––––––|</div>
-    </div>
-    <div class="opts one">
-      <button class="opt" data-q="3" data-v="0"><span class="odot"></span><span class="otxt"><span class="otitle">I have no idea what I'm looking at</span></span></button>
-      <button class="opt" data-q="3" data-v="1"><span class="odot"></span><span class="otxt"><span class="otitle">Numbers might mean frets, but I'd need guidance</span></span></button>
-      <button class="opt" data-q="3" data-v="2"><span class="odot"></span><span class="otxt"><span class="otitle">I can read it — those look like C, D, and G chords</span></span></button>
-      <button class="opt" data-q="3" data-v="3"><span class="odot"></span><span class="otxt"><span class="otitle">I read it immediately and know the voicings</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-3">← Back</button><button class="btn-next" id="next-3" disabled>Continue →</button></div>
-  </div>
-
-  <!-- STEP 4 -->
-  <div class="step" id="step-4">
-    <div class="step-eyebrow">Technique</div>
-    <div class="step-q">Which techniques have you used in actual songs?</div>
-    <div class="step-hint">Not just tried — actually used while playing a complete piece.</div>
-    <div class="opts two">
-      <button class="opt" data-q="4" data-v="0"><span class="odot"></span><span class="otxt"><span class="otitle">None yet</span></span></button>
-      <button class="opt" data-q="4" data-v="1"><span class="odot"></span><span class="otxt"><span class="otitle">Alternate picking</span></span></button>
-      <button class="opt" data-q="4" data-v="2"><span class="odot"></span><span class="otxt"><span class="otitle">Palm muting</span></span></button>
-      <button class="opt" data-q="4" data-v="3"><span class="odot"></span><span class="otxt"><span class="otitle">String bending</span></span></button>
-      <button class="opt" data-q="4" data-v="4"><span class="odot"></span><span class="otxt"><span class="otitle">Fingerpicking</span></span></button>
-      <button class="opt" data-q="4" data-v="5"><span class="odot"></span><span class="otxt"><span class="otitle">Vibrato + legato runs</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-4">← Back</button><button class="btn-next" id="next-4" disabled>Continue →</button></div>
-  </div>
-
-  <!-- STEP 5 -->
-  <div class="step" id="step-5">
-    <div class="step-eyebrow">Theory & scales</div>
-    <div class="step-q">What's your relationship with music theory?</div>
-    <div class="opts one">
-      <button class="opt" data-q="5" data-v="0"><span class="odot"></span><span class="otxt"><span class="otitle">Theory sounds scary — I just want to play songs</span></span></button>
-      <button class="opt" data-q="5" data-v="1"><span class="odot"></span><span class="otxt"><span class="otitle">I know the musical alphabet and roughly what a chord is</span></span></button>
-      <button class="opt" data-q="5" data-v="2"><span class="odot"></span><span class="otxt"><span class="otitle">I can play the pentatonic scale in at least one position</span></span></button>
-      <button class="opt" data-q="5" data-v="3"><span class="odot"></span><span class="otxt"><span class="otitle">I understand major/minor, CAGED system, and chord formulas</span></span></button>
-      <button class="opt" data-q="5" data-v="4"><span class="odot"></span><span class="otxt"><span class="otitle">Comfortable with modes, harmonic minor, chord substitutions</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-5">← Back</button><button class="btn-next" id="next-5" disabled>Continue →</button></div>
-  </div>
-
-  <!-- STEP 6 -->
-  <div class="step" id="step-6">
-    <div class="step-eyebrow">Style</div>
-    <div class="step-q">What kind of music do you want to play?</div>
-    <div class="step-hint">Pick your main vibe — we'll build your repertoire around this.</div>
-    <div class="opts two">
-      <button class="opt" data-q="6" data-v="rock"><span class="odot"></span><span class="otxt"><span class="otitle">Rock / Metal</span><span class="odesc">Riffs, solos, power chords</span></span></button>
-      <button class="opt" data-q="6" data-v="pop"><span class="odot"></span><span class="otxt"><span class="otitle">Pop / Singer-songwriter</span><span class="odesc">Chords, strumming, songs</span></span></button>
-      <button class="opt" data-q="6" data-v="blues"><span class="odot"></span><span class="otxt"><span class="otitle">Blues / Soul</span><span class="odesc">Feel, expression, bends</span></span></button>
-      <button class="opt" data-q="6" data-v="acoustic"><span class="odot"></span><span class="otxt"><span class="otitle">Acoustic / Fingerstyle</span><span class="odesc">Gentle, intricate, expressive</span></span></button>
-      <button class="opt" data-q="6" data-v="jazz"><span class="odot"></span><span class="otxt"><span class="otitle">Jazz / Funk</span><span class="odesc">Chords, groove, harmony</span></span></button>
-      <button class="opt" data-q="6" data-v="open"><span class="odot"></span><span class="otxt"><span class="otitle">Not sure yet — open to explore</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-6">← Back</button><button class="btn-next" id="next-6" disabled>Continue →</button></div>
-  </div>
-
-  <!-- STEP 7 -->
-  <div class="step" id="step-7">
-    <div class="step-eyebrow">Commitment</div>
-    <div class="step-q">How much can you practice each week?</div>
-    <div class="step-hint">Honest answers make better lesson plans. No pressure.</div>
-    <div class="opts two">
-      <button class="opt" data-q="7" data-v="low"><span class="odot"></span><span class="otxt"><span class="otitle">Less than 1 hour</span><span class="odesc">Busy life, casual pace</span></span></button>
-      <button class="opt" data-q="7" data-v="medium"><span class="odot"></span><span class="otxt"><span class="otitle">1–3 hours</span><span class="odesc">Consistent but relaxed</span></span></button>
-      <button class="opt" data-q="7" data-v="high"><span class="odot"></span><span class="otxt"><span class="otitle">3–5 hours</span><span class="odesc">Motivated and focused</span></span></button>
-      <button class="opt" data-q="7" data-v="very-high"><span class="odot"></span><span class="otxt"><span class="otitle">5+ hours</span><span class="odesc">Serious about progress</span></span></button>
-    </div>
-    <div class="nav"><button class="btn-back" id="back-7">← Back</button><button class="btn-next" id="next-7" disabled>Generate brief →</button></div>
-  </div>
-
-  <!-- RESULT -->
-  <div class="step" id="step-result">
-    <div id="result-wrap"></div>
-  </div>
-
-</main>
-
-<script>
-const TOTAL = 8;
-const answers = {};
-
-const levelData = {
-  1:{name:"Foundations of Guitar",tags:["Open strings","TAB reading","First riffs","Pick technique"]},
-  2:{name:"Open Chords & Strumming",tags:["C G D Em Am","Strumming patterns","Chord switching","Song repertoire"]},
-  3:{name:"Power Chords & Rock Riffs",tags:["Power chords","Palm muting","12-bar blues","Slides & bends"]},
-  4:{name:"Scales & Melodic Playing",tags:["Am pentatonic","Vibrato","Improvisation","Backing tracks"]},
-  5:{name:"Major/Minor Chords & Triads",tags:["Triads","CAGED intro","Chord building","I–V–vi–IV"]},
-  6:{name:"Fingerpicking & Arpeggios",tags:["PIMA","Travis picking","Natural harmonics","Blackbird"]},
-  7:{name:"Barre Chords & CAGED Expansion",tags:["E-shape barre","A-shape barre","Full CAGED","Key changes"]},
-  8:{name:"Lead Guitar & Expression",tags:["5 pentatonic positions","Call & response","Modes intro","Whole-step bends"]},
-  9:{name:"Rhythm & Genre Expansion",tags:["Maj7 min7 Dom7","Funk 16ths","6/8 & 7/8","Hybrid picking"]}
-};
-
-function calcLevel(){
-  const exp=parseInt(answers[1]||0),chords=parseInt(answers[2]||0),tab=parseInt(answers[3]||0),scale=parseInt(answers[5]||0),tech=parseInt(answers[4]||0);
-  const score=(exp*1.5)+(chords*2)+(tab*1.2)+(scale*2)+(tech*0.8);
-  if(score<=2)return 1; if(score<=5)return 2; if(score<=9)return 3;
-  if(score<=13)return 4; if(score<=17)return 5; if(score<=21)return 6;
-  if(score<=26)return 7; if(score<=31)return 8; return 9;
-}
-
-function label(key,val){
-  const maps={
-    0:{fun:"Play songs for fun",perform:"Perform / join a band",write:"Write own songs",improve:"Improve existing skills"},
-    6:{rock:"Rock / Metal",pop:"Pop / Singer-songwriter",blues:"Blues / Soul",acoustic:"Acoustic / Fingerstyle",jazz:"Jazz / Funk",open:"Open to exploring"},
-    7:{low:"< 1 h / week",medium:"1–3 h / week",high:"3–5 h / week","very-high":"5+ h / week"},
-    1:{0:"Complete beginner",1:"A few months",2:"1–2 years",3:"3–5 years",4:"5+ years",5:"Returning student"}
-  };
-  return (maps[key]||{})[val]||val;
-}
-
-function buildPrompt(level){
-  const curriculum = {
-    1:"Level 1 covers guitar anatomy, tuning, open strings, TAB reading, pick technique, alternate picking, slides, and songs like Seven Nation Army and Smoke on the Water.",
-    2:"Level 2 covers open chords (C G D E Em A Am), strumming patterns (4/4 and 3/4), capo use, basic hammer-ons/pull-offs, chord switching drills, and songs like Knockin' on Heaven's Door and Get Lucky.",
-    3:"Level 3 covers power chords on 6th/5th strings, palm muting, 12-bar blues structure, slides with power chords, string bending basics, and songs like Satisfaction and Smells Like Teen Spirit.",
-    4:"Level 4 covers Am pentatonic (3 positions), vibrato control, hammer-ons/pull-offs with scales, improvisation over backing tracks, and songs like Wish You Were Here and Stand by Me.",
-    5:"Level 5 covers major/minor chord structure (1-3-5), triads on string sets, CAGED system intro, I-V-vi-IV progressions, arpeggiation, muted strums, and songs like Let It Be and No Woman No Cry.",
-    6:"Level 6 covers PIMA fingerpicking, Travis picking, natural harmonics, combining picking and strumming, and songs like Blackbird, Dust in the Wind, and Fast Car.",
-    7:"Level 7 covers E-shape and A-shape barre chords, full CAGED triad system, key modulation, string muting, and songs like Wonderwall and Hotel California (rhythm).",
-    8:"Level 8 covers all 5 pentatonic positions, major and natural minor scales (open position, 2 octaves), call & response phrasing, modal flavours (Dorian/Mixolydian), whole-step bends, pinch harmonics, legato sequences, and songs like Stairway to Heaven solo and Pride and Joy.",
-    9:"Level 9 covers 7th chords (Maj7, min7, Dom7), extended chords (sus2, sus4, add9), funk 16th-note patterns, odd time signatures (6/8, 7/8), hybrid picking, chicken picking, and songs like Little Wing, Gravity, and Autumn Leaves."
-  };
-  const nextLevels = [];
-  for(let i=level+1;i<=Math.min(level+3,9);i++) nextLevels.push(`Level ${i}: ${curriculum[i]}`);
-  
-  return `You are a guitar teacher assistant for Nicolas Leon, an online guitar instructor. A student just completed a placement questionnaire. Based on their answers, generate a concise teacher brief.
-
-STUDENT ANSWERS:
-- Goal: ${label(0,answers[0])}
-- Playing experience: ${label(1,answers[1])}
-- Chord level: ${['Nothing yet','A few open chords','Open chords + power chords','Barre chords','7th/extended chords'][parseInt(answers[2]||0)]}
-- TAB reading: ${['Cannot read TAB','Very basic','Can read open chords from TAB','Advanced TAB reader'][parseInt(answers[3]||0)]}
-- Techniques used: ${['None','Alternate picking','Palm muting','String bending','Fingerpicking','Vibrato + legato'][parseInt(answers[4]||0)]}
-- Theory/scale knowledge: ${['None','Basic music alphabet','Knows pentatonic','Understands CAGED + chord formulas','Modes + advanced harmony'][parseInt(answers[5]||0)]}
-- Genre interest: ${label(6,answers[6])}
-- Weekly practice time: ${label(7,answers[7])}
-
-ASSIGNED LEVEL: Level ${level} — ${levelData[level].name}
-
-LEVEL ${level} CURRICULUM: ${curriculum[level]}
-
-UPCOMING LEVELS TO LEVEL UP:
-${nextLevels.join('\n')}
-
-Write a brief in this EXACT JSON format (no markdown, no backticks, just raw JSON):
-{
-  "snapshot": "2-3 sentence summary of who this student is, their current state, and what drives them. Write as a teacher's private note. Direct and useful.",
-  "strengths": ["strength 1", "strength 2", "strength 3"],
-  "focus_areas": ["thing to focus on 1", "thing to focus on 2", "thing to focus on 3"],
-  "level_up_path": ["specific skill to unlock Level ${level+1>9?level:level+1} 1", "specific skill to unlock next level 2", "specific skill 3"],
-  "first_song": "One specific song title and artist that fits this student's genre, level, and goal — chosen from the curriculum or a close equivalent",
-  "first_song_why": "One sentence: why this exact song is the right starting point for this student.",
-  "teacher_note": "One sentence of honest, tactical advice for Nicolas about how to approach this student in the first lesson."
-}`;
-}
-
-async function generateBrief(level){
-  const wrap = document.getElementById('result-wrap');
-  const ld = levelData[level];
-  const tags = ld.tags.map(t=>`<span class="tag">${t}</span>`).join('');
-  
-  wrap.innerHTML = `
-    <div class="result-hero">
-      <div class="result-lv">Starting Level ${level}</div>
-      <div class="result-title">${ld.name}</div>
-      <div class="result-tags">${tags}</div>
-    </div>
-
-    <div class="profile-grid">
-      <div class="profile-cell"><div class="pcell-label">Goal</div><div class="pcell-val">${label(0,answers[0])}</div></div>
-      <div class="profile-cell"><div class="pcell-label">Genre</div><div class="pcell-val">${label(6,answers[6])}</div></div>
-      <div class="profile-cell"><div class="pcell-label">Practice</div><div class="pcell-val">${label(7,answers[7])}</div></div>
-    </div>
-
-    <div class="brief-card">
-      <div class="brief-label">Teacher Brief</div>
-      <div class="loading"><div class="spinner"></div><span>Generating student brief…</span></div>
-    </div>
-
-    <div class="booking-card" id="booking-block" style="display:none">
-      <h3>Your spot is ready. 🎸</h3>
-      <p>You've been placed at <strong id="booking-level-name"></strong>.<br>Book your free intro call and let's get started.</p>
-      <a href="https://calendar.app.google/8o8ckbia8TZ4Js6N8" target="_blank" class="btn-book">Book your first lesson →</a>
-    </div>
-
-    <button class="btn-reset" onclick="resetQuiz()">← Start over with a new student</button>
-  `;
-
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: buildPrompt(level) }]
-      })
-    });
-    const data = await res.json();
-    const raw = data.content?.find(b=>b.type==='text')?.text || '';
-    let brief;
-    try { brief = JSON.parse(raw); }
-    catch(e) {
-      const match = raw.match(/\{[\s\S]*\}/);
-      brief = match ? JSON.parse(match[0]) : null;
-    }
-    if(!brief) throw new Error("Parse failed");
-
-    const nextLv = Math.min(level+1, 9);
-    const pathItems = (brief.level_up_path||[]).map(i=>`<li>${i}</li>`).join('');
-    const strItems = (brief.strengths||[]).map(i=>`<li>${i}</li>`).join('');
-    const focusItems = (brief.focus_areas||[]).map(i=>`<li>${i}</li>`).join('');
-
-    document.querySelector('.brief-card').innerHTML = `
-      <div class="brief-label">Teacher Brief</div>
-
-      <div class="brief-section">
-        <h4>Student snapshot</h4>
-        <p>${brief.snapshot||''}</p>
+<!-- ABOUT -->
+<section>
+  <div class="about">
+    <div class="about-left">
+      <div class="about-label">About the lessons</div>
+      <h2 class="about-title">A system built for <em>real progress</em></h2>
+      <div class="about-body">
+        <p>I'm Nicolás, a guitarist and composer based in Colombia. I've taught students across Australia, the UK, and beyond — online, 1-on-1, in English.</p>
+        <p>Every student starts with a <strong>structured placement</strong> to find exactly where they are. Then we build from there — level by level, song by song — with a clear path forward at every step.</p>
+        <p>No generic YouTube tutorials. No wasted lessons. Just <strong>a curriculum that grows with you.</strong></p>
       </div>
-
-      <div class="brief-section">
-        <h4>Strengths to build on</h4>
-        <ul>${strItems}</ul>
+    </div>
+    <div class="about-right">
+      <div class="feature-pill">
+        <div class="fp-icon">🎯</div>
+        <div>
+          <div class="fp-title">12-Level Curriculum</div>
+          <div class="fp-desc">From your first open chord to advanced lead playing — a clear, structured path with real songs at every level.</div>
+        </div>
       </div>
-
-      <div class="brief-section">
-        <h4>Focus areas for Level ${level}</h4>
-        <ul>${focusItems}</ul>
+      <div class="feature-pill">
+        <div class="fp-icon">🎸</div>
+        <div>
+          <div class="fp-title">Songs you actually want to play</div>
+          <div class="fp-desc">Pink Floyd, Nirvana, John Mayer, Beatles, Stevie Ray Vaughan — repertoire that keeps you motivated.</div>
+        </div>
       </div>
-
-      <div class="brief-section">
-        <h4>What they need to reach Level ${nextLv}</h4>
-        <ul>${pathItems}</ul>
+      <div class="feature-pill">
+        <div class="fp-icon">📋</div>
+        <div>
+          <div class="fp-title">Written summary after every lesson</div>
+          <div class="fp-desc">You get a recap of what we covered and exactly what to practice — so nothing gets lost between sessions.</div>
+        </div>
       </div>
-
-      <div class="brief-section">
-        <h4>First song to assign</h4>
-        <div class="song-chip"><span class="note">♩</span><strong>${brief.first_song||''}</strong></div>
-        <p style="margin-top:8px">${brief.first_song_why||''}</p>
+      <div class="feature-pill">
+        <div class="fp-icon">🌍</div>
+        <div>
+          <div class="fp-title">100% online, any timezone</div>
+          <div class="fp-desc">Lessons run over Zoom. Students in Australia, UK, US and more. Half the price of a local teacher.</div>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="brief-section">
-        <h4>Nicolas's note</h4>
-        <p style="font-style:italic">${brief.teacher_note||''}</p>
+<div class="divider"></div>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Student reviews</div>
+    <h2 class="section-title">What students <em>say</em></h2>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
       </div>
-    `;
+      <p class="review-text">Lessons with Nico were an absolute pleasure. He perfectly blends the joy of playing with the work of learning. A talented, patient and professional teacher — he creates a comfortable and positive environment for progress.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">M</div>
+        <div>
+          <div class="reviewer-name">Max</div>
+          <div class="reviewer-sub">Guitar student</div>
+        </div>
+      </div>
+    </div>
 
-    // Show booking CTA
-    const bookingBlock = document.getElementById('booking-block');
-    const bookingLevelName = document.getElementById('booking-level-name');
-    if(bookingBlock){ bookingBlock.style.display='block'; }
-    if(bookingLevelName){ bookingLevelName.textContent = `Level ${level} — ${ld.name}`; }
+    <div class="review-card">
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">I've been studying with Nicolas for over 12 months. He's always patient and creative — each lesson is informative and insightful. After every session, I leave with new knowledge and increased confidence in my playing.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar" style="background:#7a6a8a">R</div>
+        <div>
+          <div class="reviewer-name">Ross</div>
+          <div class="reviewer-sub">12 months of lessons</div>
+        </div>
+      </div>
+    </div>
 
-  } catch(err) {
-    document.querySelector('.brief-card').innerHTML = `
-      <div class="brief-label">Teacher Brief</div>
-      <div class="brief-section"><p>Could not generate brief. Check your API connection and try again.</p><p style="font-size:12px;margin-top:6px;color:#999">${err.message}</p></div>
-    `;
-  }
-}
+    <div class="review-card">
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">Nico taught me electric guitar for most of 2023. He'd let me lead with any song I liked — Sweet Child O' Mine, Foo Fighters — then break it down so I could actually play it. His passion for guitar is contagious.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar" style="background:#4a7a6a">R</div>
+        <div>
+          <div class="reviewer-name">Ray</div>
+          <div class="reviewer-sub">Electric guitar, 2023</div>
+        </div>
+      </div>
+    </div>
 
-function showStep(n){
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  const id = n==='result'?'step-result':'step-'+n;
-  document.getElementById(id).classList.add('active');
-  if(n!=='result'){
-    const pct = Math.round((n/TOTAL)*100);
-    document.getElementById('prog-fill').style.width = pct+'%';
-    document.getElementById('prog-label').textContent = `Step ${n+1} of ${TOTAL}`;
-    document.getElementById('prog-pct').textContent = pct+'%';
-  } else {
-    document.getElementById('prog-fill').style.width = '100%';
-    document.getElementById('prog-label').textContent = 'Complete';
-    document.getElementById('prog-pct').textContent = '100%';
-  }
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+    <div class="review-card" style="grid-column: 1 / -1; max-width: 560px; margin: 0 auto;">
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">After teaching myself for years, I really enjoyed the structure Nicolas provided. He emphasised technique and different types of strumming, which opened up new avenues for my playing. We even created songs together. Patient, informative, and easy to contact.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar" style="background:#8a6a4a">N</div>
+        <div>
+          <div class="reviewer-name">Nashi</div>
+          <div class="reviewer-sub">Self-taught guitarist, levelling up</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-function resetQuiz(){
-  Object.keys(answers).forEach(k=>delete answers[k]);
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
-  document.querySelectorAll('.btn-next').forEach(b=>b.disabled=true);
-  showStep(0);
-}
+<div class="divider"></div>
 
-document.querySelectorAll('.opt').forEach(card=>{
-  card.addEventListener('click',function(){
-    const q=this.dataset.q, v=this.dataset.v;
-    document.querySelectorAll(`.opt[data-q="${q}"]`).forEach(c=>c.classList.remove('sel'));
-    this.classList.add('sel');
-    answers[q]=v;
-    const btn=document.getElementById('next-'+q);
-    if(btn)btn.disabled=false;
-  });
-});
+<!-- BOOKING -->
+<section class="booking-section">
+  <div class="booking-eyebrow">Ready to start?</div>
+  <h2 class="booking-title">
+    Pick a time.<br><em>First lesson, no risk.</em>
+  </h2>
+  <p class="booking-sub">
+    Choose a slot that works for you. After booking, you'll receive a confirmation with the trial lesson fee and payment details.
+  </p>
+  <a href="https://calendar.app.google/8o8ckbia8TZ4Js6N8" target="_blank" class="btn-primary">
+    Choose your time slot <span class="btn-arrow">→</span>
+  </a>
+  <p class="booking-note">
+    Questions? Email <a href="mailto:nicoleonlo@gmail.com">nicoleonlo@gmail.com</a>
+  </p>
+</section>
 
-for(let i=0;i<8;i++){
-  const next=document.getElementById('next-'+i);
-  if(next)next.addEventListener('click',()=>{
-    if(i<7)showStep(i+1);
-    else { showStep('result'); generateBrief(calcLevel()); }
-  });
-  const back=document.getElementById('back-'+i);
-  if(back)back.addEventListener('click',()=>showStep(i-1));
-}
-</script>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">León <em>Guitar</em></div>
+  <div class="footer-copy">© 2026 Nicolás León · Online guitar lessons</div>
+</footer>
+
 </body>
 </html>
